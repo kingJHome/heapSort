@@ -24,7 +24,7 @@ void exchangeData(int *arr,int i,int j);
 //	hpl:待调整列表
 //	s:需要调整的位置
 //	mode:大堆排序还是小堆排序
-void HeapAdjust(HeapList *hpl,int s,int mode);
+void HeapAdjust(int *arr,int s,int len,int mode);
 
 //堆排序
 //参数说明：

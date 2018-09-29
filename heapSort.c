@@ -6,46 +6,31 @@ void exchangeData(int *arr,int i,int j){
 	arr[j] = temp;
 }
 
-void HeapAdjust(HeapList *hpl,int s,int mode){
-	int hlen = hpl->length - 1;
+void HeapAdjust(int *arr,int s,int len,int mode){
+	int rc = arr[s];
 
-	if( mode ){
-		if( 2*s <= hlen ){
-			if( 2*s+1<= hlen ){
-				if( GT(hpl->array[2*s],hpl->array[2*s+1]) && GT(hpl->array[2*s],hpl->array[s]) ){
-					exchangeData(hpl->array,s,2*s);
-				}else if( GT(hpl->array[2*s+1],hpl->array[2*s]) && GT(hpl->array[2*s+1],hpl->array[s]) ){
-					exchangeData(hpl->array,s,2*s+1);
-				}
-			}else{
-				if( GT(hpl->array[2*s],hpl->array[s]) ){
-					exchangeData(hpl->array,s,2*s);
-				}
-			}
+	for(int j = 2*s; j < len; j *= 2){
+		if( j < len && LT(arr[j],arr[j+1]) ){
+			++j;
 		}
-	}else{
-		if( 2*s <= hlen ){
-			if( 2*s+1<= hlen ){
-				if( LT(hpl->array[2*s],hpl->array[2*s+1]) && LT(hpl->array[2*s],hpl->array[s]) ){
-					exchangeData(hpl->array,s,2*s);
-				}else if( LT(hpl->array[2*s+1],hpl->array[2*s]) && LT(hpl->array[2*s+1],hpl->array[s]) ){
-					exchangeData(hpl->array,s,2*s+1);
-				}
-			}else{
-				if( LT(hpl->array[2*s],hpl->array[s]) ){
-					exchangeData(hpl->array,s,2*s);
-				}
-			}
+
+		if( mode==1&&!LT(arr[s],arr[j]) || mode==0&&!GT(arr[s],arr[j]) ){
+			break;
 		}
+		exchangeData(arr, s, j);
+		s = j;
 	}
 }
 
 void HeapSort(HeapList *hpl,int *mode){
 	int mid = (hpl->length-1) / 2;
 
-	for(int j = 0; j < mid; ++j){
-		for(int i = mid; i > j; --i){
-			HeapAdjust(hpl, i, *mode);
-		}
+	for(int i = mid; i > 0; --i){
+		HeapAdjust(hpl->array, i, hpl->length, *mode);//构建大顶堆或小顶堆
+	}
+	
+	for(int i = hpl->length-1; i > 1; --i){
+		exchangeData(hpl->array, 1, i);
+		HeapAdjust(hpl->array, 1, i-1, *mode);
 	}
 }
