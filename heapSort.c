@@ -11,7 +11,7 @@ void HeapAdjust(HeapList *hpl,int s,int mode){
 
 	if( mode ){
 		if( 2*s <= hlen ){
-			if( s*s+1<= hlen ){
+			if( 2*s+1<= hlen ){
 				if( GT(hpl->array[2*s],hpl->array[2*s+1]) && GT(hpl->array[2*s],hpl->array[s]) ){
 					exchangeData(hpl->array,s,2*s);
 				}else if( GT(hpl->array[2*s+1],hpl->array[2*s]) && GT(hpl->array[2*s+1],hpl->array[s]) ){
@@ -25,7 +25,7 @@ void HeapAdjust(HeapList *hpl,int s,int mode){
 		}
 	}else{
 		if( 2*s <= hlen ){
-			if( s*s+1<= hlen ){
+			if( 2*s+1<= hlen ){
 				if( LT(hpl->array[2*s],hpl->array[2*s+1]) && LT(hpl->array[2*s],hpl->array[s]) ){
 					exchangeData(hpl->array,s,2*s);
 				}else if( LT(hpl->array[2*s+1],hpl->array[2*s]) && LT(hpl->array[2*s+1],hpl->array[s]) ){
